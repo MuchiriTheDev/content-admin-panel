@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { assets } from '../assets/assets';
 import toast from 'react-hot-toast';
 import { IoMdCard } from 'react-icons/io';
+import { useState } from 'react';
 
 const PageAbsorber = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
