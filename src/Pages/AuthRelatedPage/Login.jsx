@@ -72,11 +72,11 @@ const Login = () => {
     }
   };
 
-  const handleGoogleSignUp = () => {
-    toast.info('Google Sign-In is coming soon!', {
-      style: { background: '#FECACA', color: '#7F1D1D', borderRadius: '8px' },
-      });
-    };
+//   const handleGoogleSignUp = () => {
+//     toast.info('Google Sign-In is coming soon!', {
+//       style: { background: '#FECACA', color: '#7F1D1D', borderRadius: '8px' },
+//       });
+//     };
 
   const fieldGuidance = {
     email: 'Use the email associated with your admin account.',
