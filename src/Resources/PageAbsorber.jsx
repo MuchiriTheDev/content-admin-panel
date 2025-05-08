@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaBars, FaTimes, FaBell, FaSignOutAlt, FaHome, FaFileAlt } from 'react-icons/fa';
 import { MdArrowBack, MdOutlineSimCardDownload } from 'react-icons/md';

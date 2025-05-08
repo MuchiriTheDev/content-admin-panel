@@ -72,7 +72,7 @@ const Login = () => {
 
   // Guidance messages inspired by SignUp and PlatformInformation
   const fieldGuidance = {
-    email: 'Use the email associated with your account.',
+    email: 'Use the email associated with your admin account.',
     password: 'Enter your password to securely log in.',
   };
 
