@@ -3,7 +3,9 @@ import PageAbsorber from '../../Resources/PageAbsorber'
 
 const LandingPage = () => {
   return (
-    <PageAbsorber>LandingPage</PageAbsorber>
+    <PageAbsorber>
+      <div className=''></div>
+    </PageAbsorber>
   )
 }
 

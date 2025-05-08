@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { assets } from '../../assets/assets';
 import { FaLock, FaMailBulk, FaExclamationCircle } from 'react-icons/fa';
 import { MdArrowBack } from 'react-icons/md';
@@ -12,7 +12,7 @@ import { backendUrl } from '../../App';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
-  const [ loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
@@ -48,12 +48,20 @@ const Login = () => {
     try {
       const response = await axios.post(`${backendUrl}/auth/login`, formData);
       if (response.data.success) {
-        toast.success('Login successful!', {
-          style: { background: '#A3E635', color: '#4A2C2A', borderRadius: '8px' },
-        });
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        navigate('/');
+        const user = response.data.user;
+        if (user.role.toLowerCase() === 'admin') {
+            toast.success('Admin login successful!', {
+                style: { background: '#A3E635', color: '#4A2C2A', borderRadius: '8px' },
+            });
+            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', JSON.stringify(response.data.user));;
+            navigate('/');
+        } else{
+            toast.error('You are not authorized to access this page.', {
+                style: { background: '#FECACA', color: '#7F1D1D', borderRadius: '8px' },
+            });
+            return;
+        }
       }
     } catch (error) {
       toast.error(error?.response?.data?.error || 'An error occurred while logging in.', {
@@ -67,13 +75,12 @@ const Login = () => {
   const handleGoogleSignUp = () => {
     toast.info('Google Sign-In is coming soon!', {
       style: { background: '#FECACA', color: '#7F1D1D', borderRadius: '8px' },
-    });
-  };
+      });
+    };
 
-  // Guidance messages inspired by SignUp and PlatformInformation
   const fieldGuidance = {
     email: 'Use the email associated with your admin account.',
-    password: 'Enter your password to securely log in.',
+    password: 'Enter your admin password to securely log in.',
   };
 
   if (loading) return <Loading />;
@@ -82,73 +89,72 @@ const Login = () => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-      className="min-h-screen w-full bg-gradient-to-br from-white to-appleGreen/10 flex items-center justify-center p-0 md:p-6 relative overflow-hidden"
+      transition={{ duration: 0.8 }}
+      className="min-h-screen w-full bg-gradient-to-br from-white to-appleGreen/10 flex items-center justify-center p-0 md:p-4 relative overflow-hidden"
     >
       {/* Background Shapes */}
       <motion.div
         animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.4, 0.2] }}
         transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-0 left-0 w-1/3 h-1/3 bg-yellowGreen rounded-full blur-xl -z-10"
+        className="absolute top-0 left-0 w-1/4 h-1/4 bg-yellowGreen rounded-full blur-xl -z-10"
       />
       <motion.div
         animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.3, 0.15] }}
         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-brown rounded-full blur-xl -z-10"
+        className="absolute bottom-0 right-0 w-1/4 h-1/4 bg-brown rounded-full blur-xl -z-10"
       />
 
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8, type: 'spring', stiffness: 120 }}
-        className="w-full md:max-w-2xl bg-white min-h-screen md:min-h-fit rounded-2xl shadow-lg border border-appleGreen/20 "
+        transition={{ duration: 0.6, type: 'spring', stiffness: 120 }}
+        className="w-full md:max-w-3xl bg-white min-h-screen md:min-h-fit p-4 md:rounded-xl shadow-md border border-appleGreen"
       >
-       
         {/* Form Section */}
         <motion.div
           initial={{ x: 100, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="w-full p-10 flex items-center justify-center"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="w-full p-6 flex items-center justify-center"
         >
           <form className="w-full" onSubmit={handleSubmit}>
             {/* Header */}
             <motion.div
-              initial={{ y: -30, opacity: 0 }}
+              initial={{ y: -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex items-center gap-4 mb-3"
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="flex items-center gap-3 mb-2"
             >
               <Link to="/">
                 <motion.div
                   whileHover={{ scale: 1.2 }}
                   whileTap={{ scale: 0.9 }}
-                  className="p-2 bg-brown/10 rounded-full"
+                  className="p-1 bg-brown/10 rounded-full"
                 >
-                  <MdArrowBack size={24} className="text-brown" />
+                  <MdArrowBack size={20} className="text-brown" />
                 </motion.div>
               </Link>
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-brown">Welcome Back</h1>
+                <h1 className="text-2xl md:text-3xl font-bold text-brown">Admin Login</h1>
               </div>
             </motion.div>
 
-            <p className="text-sm md:text-base text-gray-600 mt-2 mb-8">
-              Log in to continue your journey as a Content Creator.
+            <p className="text-xs md:text-sm text-gray-600 mt-1 mb-6">
+              Log in to access the admin panel and manage your platform.
             </p>
 
             {/* Form Inputs */}
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-4">
               {/* Email */}
               <motion.div
                 initial={{ x: -50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
+                transition={{ duration: 0.4, delay: 0.7 }}
               >
-                <label htmlFor="email" className="block text-sm font-medium text-brown mb-1">
+                <label htmlFor="email" className="block text-xs font-medium text-brown mb-1">
                   Email <span className="text-red-500">*</span>
                 </label>
-                <p className="text-xs text-gray-500 mb-2">{fieldGuidance.email}</p>
+                <p className="text-xs text-gray-500 mb-1">{fieldGuidance.email}</p>
                 <motion.input
                   whileFocus={{ scale: 1.02, borderColor: '#AAC624' }}
                   type="email"
@@ -157,7 +163,7 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className={`w-full h-12 border-2 ${errors.email ? 'border-red-400' : 'border-appleGreen'} rounded-lg text-brown bg-white px-3 focus:ring-2 focus:ring-yellowGreen focus:outline-none transition-all duration-200`}
+                  className={`w-full h-10 border-2 ${errors.email ? 'border-red-400' : 'border-appleGreen'} rounded-lg text-sm text-brown bg-white px-2 focus:ring-2 focus:ring-yellowGreen focus:outline-none transition-all duration-200`}
                 />
                 <AnimatePresence>
                   {errors.email && (
@@ -165,9 +171,9 @@ const Login = () => {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="text-red-500 text-xs mt-1 flex items-center gap-1"
+                      className="text-red-500 text-2xs mt-1 flex items-center gap-1"
                     >
-                      <FaExclamationCircle /> {errors.email}
+                      <FaExclamationCircle size={12} /> {errors.email}
                     </motion.p>
                   )}
                 </AnimatePresence>
@@ -177,12 +183,12 @@ const Login = () => {
               <motion.div
                 initial={{ x: -50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.9 }}
+                transition={{ duration: 0.4, delay: 0.8 }}
               >
-                <label htmlFor="password" className="block text-sm font-medium text-brown mb-1">
+                <label htmlFor="password" className="block text-xs font-medium text-brown mb-1">
                   Password <span className="text-red-500">*</span>
                 </label>
-                <p className="text-xs text-gray-500 mb-2">{fieldGuidance.password}</p>
+                <p className="text-xs text-gray-500 mb-1">{fieldGuidance.password}</p>
                 <motion.input
                   whileFocus={{ scale: 1.02, borderColor: '#AAC624' }}
                   type="password"
@@ -191,7 +197,7 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className={`w-full h-12 border-2 ${errors.password ? 'border-red-400' : 'border-appleGreen'} rounded-lg text-brown bg-white px-3 focus:ring-2 focus:ring-yellowGreen focus:outline-none transition-all duration-200`}
+                  className={`w-full h-10 border-2 ${errors.password ? 'border-red-400' : 'border-appleGreen'} rounded-lg text-sm text-brown bg-white px-2 focus:ring-2 focus:ring-yellowGreen focus:outline-none transition-all duration-200`}
                 />
                 <AnimatePresence>
                   {errors.password && (
@@ -199,9 +205,9 @@ const Login = () => {
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -10 }}
-                      className="text-red-500 text-xs mt-1 flex items-center gap-1"
+                      className="text-red-500 text-2xs mt-1 flex items-center gap-1"
                     >
-                      <FaExclamationCircle /> {errors.password}
+                      <FaExclamationCircle size={12} /> {errors.password}
                     </motion.p>
                   )}
                 </AnimatePresence>
@@ -212,10 +218,10 @@ const Login = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1.0 }}
-              className="flex justify-end mt-4"
+              transition={{ duration: 0.4, delay: 0.9 }}
+              className="flex justify-end mt-3"
             >
-              <Link to="/reset-email" className="text-sm text-yellowGreen font-semibold hover:underline">
+              <Link to="/reset-email" className="text-xs text-yellowGreen font-semibold hover:underline">
                 Forgot Password?
               </Link>
             </motion.div>
@@ -224,14 +230,14 @@ const Login = () => {
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1.1 }}
-              className="mt-6"
+              transition={{ duration: 0.4, delay: 1.0 }}
+              className="mt-4"
             >
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: '0 8px 25px rgba(124, 179, 42, 0.3)' }}
+                whileHover={{ scale: 1.05, boxShadow: '0 6px 20px rgba(124, 179, 42, 0.3)' }}
                 whileTap={{ scale: 0.95 }}
                 type="submit"
-                className="w-full h-12 bg-gradient-to-r from-yellowGreen to-appleGreen text-brown font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+                className="w-full h-10 bg-gradient-to-r from-yellowGreen to-appleGreen text-brown font-semibold rounded-lg shadow-sm hover:shadow-md transition-all duration-300 text-sm"
               >
                 Log In
               </motion.button>
@@ -241,27 +247,27 @@ const Login = () => {
             {/* <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1.2 }}
-              className="flex items-center my-6"
+              transition={{ duration: 0.4, delay: 1.1 }}
+              className="flex items-center my-4"
             >
               <div className="flex-grow h-px bg-gray-200"></div>
-              <span className="mx-4 text-sm text-gray-500 font-medium">Or</span>
+              <span className="mx-3 text-xs text-gray-500 font-medium">Or</span>
               <div className="flex-grow h-px bg-gray-200"></div>
             </motion.div> */}
 
             {/* Google Sign-In */}
             {/* <motion.div
-              initial={{ y: 20, opacity: 0 }}
+              initialdig={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1.3 }}
+              transition={{ duration: 0.4, delay: 1.2 }}
             >
               <motion.button
-                whileHover={{ scale: 1.05, boxShadow: '0 8px 25px rgba(79, 57, 26, 0.2)' }}
+                whileHover={{ scale: 1.05, boxShadow: '0 6px 20px rgba(79, 57, 26, 0.2)' }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleGoogleSignUp}
-                className="w-full h-12 bg-white text-brown font-semibold rounded-lg border-2 border-brown flex items-center justify-center gap-3 hover:bg-brown hover:text-white transition-all duration-300"
+                className="w-full h-10 bg-white text-brown font-semibold rounded-lg border-2 border-brown flex items-center justify-center gap-2 hover:bg-brown hover:text-white transition-all duration-300 text-sm"
               >
-                <FcGoogle size={20} /> Continue with Google
+                <FcGoogle size={16} /> Continue with Google
               </motion.button>
             </motion.div> */}
 
@@ -269,16 +275,15 @@ const Login = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 1.4 }}
-              className="text-center mt-6 space-y-3"
+              transition={{ duration: 0.4, delay: 1.3 }}
+              className="text-center mt-4 space-y-2"
             >
-              <p className="text-sm text-gray-600">
-                Don’t have an account?{' '}
-                <Link to="/signup" className="text-yellowGreen font-semibold hover:underline">
-                  Sign Up
+              <p className="text-xs text-gray-600">
+                Don’t have an admin account?{' '}
+                <Link to="/" className="text-yellowGreen font-semibold hover:underline">
+                  Contact Support
                 </Link>
               </p>
-              
             </motion.div>
           </form>
         </motion.div>

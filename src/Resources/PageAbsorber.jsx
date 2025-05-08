@@ -145,7 +145,7 @@ const PageAbsorber = ({ children }) => {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="flex-1 ml-0 md:ml-56 mt-16 p-4 overflow-y-auto"
       >
-        <div className="max-w-6xl mx-auto bg-white p-4 rounded-xl border border-appleGreen shadow-sm">
+        <div className="">
           {children}
         </div>
       </motion.main>
