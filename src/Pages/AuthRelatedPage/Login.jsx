@@ -6,9 +6,9 @@ import { FcGoogle } from 'react-icons/fc';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Loading from '../../Resources/Loading';
-import toast from 'react-hot-toast';
 import axios from 'axios';
 import { backendUrl } from '../../App';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });

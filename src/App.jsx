@@ -20,12 +20,7 @@ function App() {
     window.scrollTo(0, 0)
   }, [location])
 
-  useEffect(() => {
-    if (!localStorage.getItem('token')) {
-      toast.info('Please login to continue')
-     navigate('/login') 
-    }
-  }, [])
+  
 
   return (
     <div className="">
