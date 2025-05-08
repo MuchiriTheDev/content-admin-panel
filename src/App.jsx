@@ -7,9 +7,9 @@ import LandingPage from './Pages/HomeRelatedPages/LandingPage'
 import Contracts from './Pages/ContractsRelatedPage/Contracts'
 import Premiums from './Pages/PremiumsRelatedPage/Premiums'
 import Claims from './Pages/ClaimsRelatedPage/Claims'
+import Login from './Pages/AuthRelatedPage/Login'
 
 export const backendUrl = `${import.meta.env.VITE_BACKEND_URL}/api`
-console.log(backendUrl)
 
 function App() {
   const location = useLocation()
@@ -30,6 +30,7 @@ function App() {
           <Route path='/premiums/:id' element={<Premiums />} />
           <Route path='/claims' element={<Claims />} />
           <Route path='/claims/:id' element={<Claims />} />
+          <Route path='/login' element={<Login/>} />
         </Routes>
         <Toaster
           position="top-center"
