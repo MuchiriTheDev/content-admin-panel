@@ -144,14 +144,14 @@ const UserTable = () => {
             <table className="w-full min-w-[800px] text-left table-auto">
               <thead>
                 <tr className="text-xs md:text-sm text-gray-500 bg-gray-50 sticky top-0 z-10">
-                  <th className="p-4 font-medium">User ID</th>
-                  <th className="p-4 font-medium">Name</th>
-                  <th className="p-4 font-medium">Email</th>
-                  <th className="p-4 font-medium">Status</th>
-                  <th className="p-4 font-medium">Premium (KES)</th>
-                  <th className="p-4 font-medium">Claims</th>
-                  <th className="p-4 font-medium">Content Reviews</th>
-                  <th className="p-4 font-medium">Risk Level</th>
+                  <th className="p-4 text-center font-medium">User ID</th>
+                  <th className="p-4 text-center min-w-44 font-medium">Name</th>
+                  <th className="p-4 text-center font-medium">Email</th>
+                  <th className="p-4 text-center min-w-44 font-medium">Status</th>
+                  <th className="p-4 text-center min-w-44 font-medium">Premium (KES)</th>
+                  <th className="p-4 text-center font-medium">Claims</th>
+                  <th className="p-4 text-center min-w-44 font-medium">Content Reviews</th>
+                  <th className="p-4 text-center min-w-44 font-medium">Risk Level</th>
                 </tr>
               </thead>
               <tbody>
@@ -163,24 +163,24 @@ const UserTable = () => {
                     transition={{ duration: 0.2, delay: index * 0.1 }}
                     className="border-t border-gray-100 hover:bg-appleGreen/10 transition-all duration-200"
                   >
-                    <td className="p-4 text-xs md:text-sm text-brown">
+                    <td className="p-4 text-center text-xs md:text-sm text-brown">
                       <Link to={`/user/${user._id}`} className="hover:underline">
                         {user._id.slice(-6)}
                       </Link>
                     </td>
-                    <td className="p-4 text-xs md:text-sm text-brown">
+                    <td className="p-4 text-center min-w-44 text-xs md:text-sm text-brown">
                       {user.personalInfo.firstName} {user.personalInfo.lastName}
                     </td>
-                    <td className="p-4 text-xs md:text-sm text-brown">{user.personalInfo.email}</td>
-                    <td className="p-4 text-xs md:text-sm text-brown">
+                    <td className="p-4 text-center text-xs md:text-sm text-brown">{user.personalInfo.email}</td>
+                    <td className="p-4 text-center min-w-44 text-xs md:text-sm text-brown">
                       {getStatusBadge(user.insuranceStatus.status)}
                     </td>
-                    <td className="p-4 text-xs md:text-sm text-brown">
+                    <td className="p-4 text-center min-w-44 text-xs md:text-sm text-brown">
                       {user.premium?.finalAmount?.toFixed(2) || 'N/A'}
                     </td>
-                    <td className="p-4 text-xs md:text-sm text-brown">{user.claimsCount}</td>
-                    <td className="p-4 text-xs md:text-sm text-brown">{user.contentReviewsCount}</td>
-                    <td className="p-4 text-xs md:text-sm text-brown">{user.recentRiskLevel}</td>
+                    <td className="p-4 text-center text-xs md:text-sm text-brown">{user.claimsCount}</td>
+                    <td className="p-4 text-center min-w-44 text-xs md:text-sm text-brown">{user.contentReviewsCount}</td>
+                    <td className="p-4 text-center min-w-44 text-xs md:text-sm text-brown">{user.recentRiskLevel}</td>
                   </motion.tr>
                 ))}
               </tbody>

@@ -41,13 +41,13 @@ const InsightCard = ({ insight }) => {
 
       {/* Description */}
       <div className="flex items-start gap-2">
-        <FiInfo size={30} className="text-2xl text-appleGreen mt-0.5" />
+        <FiInfo className="text-2xl text-appleGreen mt-0.5" />
         <p className="text-sm text-gray-600 ">{insight.description}</p>
       </div>
 
       {/* Action */}
-      <div className="flex items-start p-3 bg-fadeBrown/40 rounded-sm gap-2">
-        <FiCheckCircle size={30} className="text-2xl text-yellowGreen mt-0.5" />
+      <div className="flex items-start p-3 bg-fadeBrown/40 rounded-lg gap-2">
+        <FiCheckCircle className="text-2xl text-appleGreen mt-0.5" />
         <p className="text-xs text-brown italic font-medium">{insight.action}</p>
       </div>
     </motion.div>
