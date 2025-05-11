@@ -24,14 +24,14 @@ const ContractReportForm = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const validationErrors = validateForm();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      toast.error('Please fix the form errors', {
-        style: { background: '#FECACA', color: '#7F1D1D' },
-      });
-      return;
-    }
+    // const validationErrors = validateForm();
+    // if (Object.keys(validationErrors).length > 0) {
+    //   setErrors(validationErrors);
+    //   toast.error('Please fix the form errors', {
+    //     style: { background: '#FECACA', color: '#7F1D1D' },
+    //   });
+    //   return;
+    // }
 
     setLoading(true);
     try {
@@ -96,7 +96,6 @@ const ContractReportForm = ({ isOpen, onClose }) => {
                   className={`w-full p-3 border-2 border-appleGreen rounded-lg text-brown bg-white focus:ring-2 focus:ring-yellowGreen focus:outline-none transition-all duration-200 ${
                     errors.startDate ? 'border-red-500' : ''
                   }`}
-                  required
                 />
                 {errors.startDate && (
                   <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
@@ -116,7 +115,6 @@ const ContractReportForm = ({ isOpen, onClose }) => {
                   className={`w-full p-3 border-2 border-appleGreen rounded-lg text-brown bg-white focus:ring-2 focus:ring-yellowGreen focus:outline-none transition-all duration-200 ${
                     errors.endDate ? 'border-red-500' : ''
                   }`}
-                  required
                 />
                 {errors.endDate && (
                   <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
