@@ -11,7 +11,7 @@ const InsightCard = ({ insight }) => {
     low: { bg: 'bg-appleGreen/40 border border-brown', text: 'text-brown', icon: <FiCheck className="mr-1" /> },
   };
 
-  const priority = insight.priority.toLowerCase();
+  const priority = insight?.priority?.toLowerCase() || null;
   const priorityStyle = priorityStyles[priority] || {
     bg: 'bg-gray-200',
     text: 'text-gray-900',
@@ -31,12 +31,14 @@ const InsightCard = ({ insight }) => {
           <BsFillLightbulbFill className="text-2xl text-yellowGreen opacity-80" />
           <h3 className="text-base font-semibold text-brown">{insight.title}</h3>
         </div>
-        <span
-          className={`inline-flex capitalize items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${priorityStyle.bg} ${priorityStyle.text}`}
-        >
-          {priorityStyle.icon}
-          {insight.priority}
-        </span>
+        { insight.priority &&
+         ( <span
+            className={`inline-flex capitalize items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${priorityStyle.bg} ${priorityStyle.text}`}
+          >
+            {priorityStyle.icon}
+            {insight.priority}
+          </span>)
+          }
       </div>
 
       {/* Description */}
