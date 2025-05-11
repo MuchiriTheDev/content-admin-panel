@@ -71,7 +71,7 @@ export const getContractHistory = (userId) =>
 // Generate insurance contract report with AI insights
 // GET /api/admin/insurance/report
 export const generateContractReport = (params) =>
-  api.get('/admin-insurance/admin/contract/report', { params, responseType: 'blob' });
+  api.get('/admin-insurance/admin/report', { params, responseType: 'blob' });
 
 // Existing User-Related Admin Endpoints (retained for completeness)
 export const getUserDetails = (userId) => api.get(`/admin-auth/admin/users/${userId}`);

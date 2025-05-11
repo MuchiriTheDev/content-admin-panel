@@ -13,6 +13,7 @@ import {
   FaExclamationCircle,
   FaChevronLeft,
   FaChevronRight,
+  FaCheckCircle,
 } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
 import moment from 'moment';
@@ -22,11 +23,12 @@ import {
   analyzeContract,
   updateContract,
   terminateContract,
-  getContractHistory,
-} from '../../Resources/Apiservice'; // Updated to use new api.js
+  getContractHistory, // New API function
+} from '../../Resources/Apiservice';
 import InsightCard from '../../Component/HomePageComponents/InsightCard';
 import UpdateContractForm from '../../Component/ContractsPageComponents/UpdateContractForm';
 import TerminateConfirmModal from '../../Component/ContractsPageComponents/TerminateConfirmModal';
+import ChangeStatusModal from '../../Component/ContractsPageComponents/ChangeStatusModal'; // New modal component
 
 const ContractDetails = () => {
   const { id } = useParams();
@@ -38,6 +40,7 @@ const ContractDetails = () => {
   const [error, setError] = useState(null);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isTerminateModalOpen, setIsTerminateModalOpen] = useState(false);
+  const [isChangeStatusModalOpen, setIsChangeStatusModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
 
@@ -68,11 +71,25 @@ const ContractDetails = () => {
   const handleUpdate = (updatedContract) => {
     setContract(updatedContract);
     setIsUpdateModalOpen(false);
-    toast.success('Contract updated successfully');
+    toast.success('Contract updated successfully', {
+      style: { background: '#A3E635', color: '#4A2C2A' },
+    });
   };
 
   const handleTerminate = () => {
     setIsTerminateModalOpen(true);
+  };
+
+  const handleChangeStatus = () => {
+    setIsChangeStatusModalOpen(true);
+  };
+
+  const handleStatusUpdate = (updatedContract) => {
+    setContract(updatedContract);
+    setIsChangeStatusModalOpen(false);
+    toast.success('Contract status updated successfully', {
+      style: { background: '#A3E635', color: '#4A2C2A' },
+    });
   };
 
   const getStatusBadge = (status) => (
@@ -170,6 +187,17 @@ const ContractDetails = () => {
                   <FaEdit className="mr-2" />
                   Update
                 </motion.button>
+                {['Pending', 'Rejected'].includes(contract.insuranceStatus.status) && (
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleChangeStatus}
+                    className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-yellowGreen to-appleGreen text-brown rounded-lg font-semibold hover:bg-yellowGreen transition-all duration-200"
+                  >
+                    <FaCheckCircle className="mr-2" />
+                    Change Status
+                  </motion.button>
+                )}
                 {contract.insuranceStatus.status === 'Approved' && (
                   <motion.button
                     whileHover={{ scale: 1.05 }}
@@ -238,7 +266,7 @@ const ContractDetails = () => {
                     {
                       label: 'Approved At',
                       value: contract.insuranceStatus.approvedAt
-                        ? moment(contract.insuranceStatus.appliedAt).format('MMM D, YYYY')
+                        ? moment(contract.insuranceStatus.approvedAt).format('MMM D, YYYY')
                         : 'N/A',
                     },
                     {
@@ -256,6 +284,10 @@ const ContractDetails = () => {
                     {
                       label: 'Coverage Period',
                       value: `${contract.insuranceStatus.coveragePeriod} months`,
+                    },
+                    {
+                      label: 'Rejection Reason',
+                      value: contract.insuranceStatus.rejectionReason || 'N/A',
                     },
                   ].map((item, index) => (
                     <div
@@ -618,6 +650,13 @@ const ContractDetails = () => {
               onClose={() => setIsTerminateModalOpen(false)}
               contractId={id}
               userName={`${contract.personalInfo.firstName} ${contract.personalInfo.lastName}`}
+            />
+            <ChangeStatusModal
+              isOpen={isChangeStatusModalOpen}
+              onClose={() => setIsChangeStatusModalOpen(false)}
+              contractId={id}
+              userName={`${contract.personalInfo.firstName} ${contract.personalInfo.lastName}`}
+              onStatusUpdate={handleStatusUpdate}
             />
           </>
         )}
