@@ -6,9 +6,9 @@ import { BsFillLightbulbFill } from 'react-icons/bs';
 
 const InsightCard = ({ insight }) => {
   const priorityStyles = {
-    high: { bg: 'bg-red-100', text: 'text-red-800', icon: <FiAlertTriangle className="mr-1" /> },
-    medium: { bg: 'bg-yellow-100', text: 'text-yellow-800', icon: <FiAlertCircle className="mr-1" /> },
-    low: { bg: 'bg-appleGreen/20', text: 'text-brown', icon: <FiCheck className="mr-1" /> },
+    high: { bg: 'bg-red-100 border border-red-800', text: 'text-red-800', icon: <FiAlertTriangle className="mr-1" /> },
+    medium: { bg: 'bg-yellow-100 border border-yellow-800', text: 'text-yellow-800', icon: <FiAlertCircle className="mr-1" /> },
+    low: { bg: 'bg-appleGreen/40 border border-brown', text: 'text-brown', icon: <FiCheck className="mr-1" /> },
   };
 
   const priority = insight.priority.toLowerCase();
@@ -32,7 +32,7 @@ const InsightCard = ({ insight }) => {
           <h3 className="text-base font-semibold text-brown">{insight.title}</h3>
         </div>
         <span
-          className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${priorityStyle.bg} ${priorityStyle.text}`}
+          className={`inline-flex capitalize items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${priorityStyle.bg} ${priorityStyle.text}`}
         >
           {priorityStyle.icon}
           {insight.priority}

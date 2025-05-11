@@ -147,6 +147,7 @@ const UserTable = () => {
                   <th className="p-4 text-center font-medium">User ID</th>
                   <th className="p-4 text-center min-w-44 font-medium">Name</th>
                   <th className="p-4 text-center font-medium">Email</th>
+                  <th className="p-4 text-center min-w-44 font-medium">Role</th>
                   <th className="p-4 text-center min-w-44 font-medium">Status</th>
                   <th className="p-4 text-center min-w-44 font-medium">Premium (KES)</th>
                   <th className="p-4 text-center font-medium">Claims</th>
@@ -172,6 +173,9 @@ const UserTable = () => {
                       {user.personalInfo.firstName} {user.personalInfo.lastName}
                     </td>
                     <td className="p-4 text-center text-xs md:text-sm text-brown">{user.personalInfo.email}</td>
+                    <td className="p-4 text-center min-w-44 text-xs md:text-sm text-brown">
+                        {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                    </td>
                     <td className="p-4 text-center min-w-44 text-xs md:text-sm text-brown">
                       {getStatusBadge(user.insuranceStatus.status)}
                     </td>
