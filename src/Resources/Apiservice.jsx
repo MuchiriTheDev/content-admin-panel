@@ -14,7 +14,9 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
-
+export const getUserDetails = (userId) => api.get(`/admin-auth/admin/users/${userId}`);
+export const updateUser = (userId, data) => api.put(`/admin-auth/admin/users/${userId}`, data);
+export const deactivateUser = (userId) => api.delete(`/admin-auth/admin/users/${userId}`);
 export const getAllUsers = (params) => api.get('/admin-auth/admin/users', { params });
 export const getAnalytics = (params) => api.get('/admin-auth/admin/analytics', { params });
 export const generateUserReport = (params) =>
