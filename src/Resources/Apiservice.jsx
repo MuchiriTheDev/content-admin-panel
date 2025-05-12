@@ -16,6 +16,33 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// PREMIUMS RELATED
+
+export const getAllPremiums = async (filters) => api.get('/premiums/admin/all', { params: filters });
+
+export const getOverduePremiums = async () => api.get('/premiums/overdue');
+
+export const generatePremiumReport = async (filters) => api.post('/admin-premiums/admin/report', filters, {
+    responseType: 'blob',
+  });
+
+export const bulkAdjustPremiums = async (data) => api.post('/admin-premiums/admin/bulk-adjust', data);
+
+export const sendPaymentReminders = async (data) =>  api.post('/admin-premiums/admin/reminders', data);
+
+export const auditPremiumsWithAI = async (data) => api.post('/admin-premiums/admin/audit', data);
+
+export const getPremiumHistory = async (premiumId) => api.get(`/admin-premiums/admin/${premiumId}/history`);
+
+export const adjustPremium = async (premiumId, data) => api.put(`/premiums/admin/${premiumId}/adjust`, data);
+
+export const retryPayment = async (data) => api.post('/premiums/retry-payment', data);
+
+export const getPremiumAnalytics = async (filters) => api.get('/premiums/admin/analytics', { params: filters });
+
+
+
+
 // Admin Insurance-Related Endpoints
 
 // Review a single insurance application (approve or reject)
@@ -73,6 +100,8 @@ export const getContractHistory = (userId) =>
 export const generateContractReport = (params) =>
   api.get('/admin-insurance/admin/report', { params, responseType: 'blob' });
 
+
+// USERS RELATED
 // Existing User-Related Admin Endpoints (retained for completeness)
 export const getUserDetails = (userId) => api.get(`/admin-auth/admin/users/${userId}`);
 export const updateUser = (userId, data) => api.put(`/admin-auth/admin/users/${userId}`, data);
