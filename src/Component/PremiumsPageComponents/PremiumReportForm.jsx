@@ -109,7 +109,6 @@ const PremiumReportForm = ({ open, handleClose, onSuccess }) => {
                   value={filters.startDate}
                   onChange={handleChange}
                   className="w-full p-2 border border-appleGreen rounded-lg text-brown focus:outline-none focus:ring-2 focus:ring-yellowGreen"
-                  required
                 />
               </div>
               <div>
@@ -120,7 +119,6 @@ const PremiumReportForm = ({ open, handleClose, onSuccess }) => {
                   value={filters.endDate}
                   onChange={handleChange}
                   className="w-full p-2 border border-appleGreen rounded-lg text-brown focus:outline-none focus:ring-2 focus:ring-yellowGreen"
-                  required
                 />
               </div>
               <div>

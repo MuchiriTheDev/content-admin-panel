@@ -13,6 +13,7 @@ import AuditPremiumModal from '../../Component/PremiumsPageComponents/AuditPremi
 import OverduePremiumsSection from '../../Component/PremiumsPageComponents/OverduePremiumsSection';
 import AnalyticsChart from '../../Component/HomePageComponents/AnalyticsChart';
 import InsightCard from '../../Component/HomePageComponents/InsightCard';
+import PremiumReportForm from '../../Component/PremiumsPageComponents/PremiumReportForm';
 
 const Premiums = () => {
   const [tabValue, setTabValue] = useState(0);
@@ -307,6 +308,12 @@ const Premiums = () => {
             )}
           </div>
         )}
+
+        <PremiumReportForm
+          open={openReportModal}
+          handleClose={() => setOpenReportModal(false)}
+          onSuccess={() => setOpenReportModal(false)}
+        />
       </motion.div>
     </PageAbsorber>
   );
