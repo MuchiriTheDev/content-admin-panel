@@ -151,24 +151,26 @@ const PremiumTable = ({ premiums: initialPremiums, loading: initialLoading }) =>
               className="pl-10 p-2 border border-appleGreen rounded-lg text-brown w-full md:w-64"
             />
           </div>
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center px-4 py-2 bg-gradient-to-r from-brown to-fadeBrown text-white rounded-lg font-semibold hover:bg-brown"
-          >
-            Filters {showFilters ? <FiChevronUp className="ml-2" /> : <FiChevronDown className="ml-2" />}
-          </button>
-          {selectedPremiums.length > 0 && (
-            <motion.button
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.2 }}
-              onClick={handleBulkAudit}
-              className="flex items-center px-4 py-2 bg-gradient-to-r from-yellowGreen to-appleGreen text-brown rounded-lg font-semibold hover:bg-yellowGreen"
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="flex items-center px-5 py-2 bg-gradient-to-r from-brown to-fadeBrown text-white rounded-lg font-semibold hover:bg-brown"
             >
-              <FiCheckCircle className="mr-2" />
-              Audit {selectedPremiums.length} Premium(s)
-            </motion.button>
-          )}
+              Filters {showFilters ? <FiChevronUp className="ml-2" /> : <FiChevronDown className="ml-2" />}
+            </button>
+            {selectedPremiums.length > 0 && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.2 }}
+                onClick={handleBulkAudit}
+                className="flex items-center px-4 py-2 bg-gradient-to-r from-yellowGreen to-appleGreen text-brown rounded-lg font-semibold hover:bg-yellowGreen"
+              >
+                <FiCheckCircle className="mr-2" />
+                Audit {selectedPremiums.length} Premium(s)
+              </motion.button>
+            )}
+          </div>
         </div>
       </div>
 
