@@ -234,11 +234,11 @@ const ContractDetails = () => {
               {error}
             </motion.div>
           ) : (
-            <div className="space-y-6">
+            <div className="w-full">
               {/* Contract Info */}
               <motion.div
                 id="contract"
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 10, scale: 0 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3 }}
                 whileHover={{ scale: 1.02 }}
@@ -249,7 +249,7 @@ const ContractDetails = () => {
                   <h2 className="text-lg md:text-xl font-semibold text-brown">Contract Information</h2>
                 </div>
                 <p className="text-gray-600 text-sm mb-4">Details about the contract and user information.</p>
-                <div className="space-y-2">
+                <div className="">
                   {[
                     {
                       label: 'Full Name',
@@ -292,7 +292,7 @@ const ContractDetails = () => {
                   ].map((item, index) => (
                     <div
                       key={index}
-                      className={`flex justify-between items-center p-3 rounded-md ${
+                      className={`flex w-full justify-between items-center p-3 rounded-md ${
                         index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
                       }`}
                     >
