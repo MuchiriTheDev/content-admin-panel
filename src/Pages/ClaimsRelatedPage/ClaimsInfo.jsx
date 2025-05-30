@@ -107,7 +107,7 @@ const ClaimsInfo = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="p-4 md:p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-xl border border-appleGreen mx-auto my-4 max-w-4xl"
+        className="p-4 md:p-5 bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-xl border border-appleGreen mx-auto my-4 max-w-5xl"
       >
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">

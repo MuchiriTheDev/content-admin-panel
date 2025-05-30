@@ -118,7 +118,7 @@ const EvidenceViewer = ({ evidence }) => {
                     <img
                       src={file.url}
                       alt={file.description}
-                      className="h-16 w-full object-cover rounded cursor-pointer"
+                      className="h-30 w-full object-cover rounded cursor-pointer"
                       loading="lazy"
                       onClick={() => openModal(file)}
                       onError={() => handleError('image')}
