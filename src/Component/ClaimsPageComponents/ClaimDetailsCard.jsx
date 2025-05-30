@@ -17,7 +17,7 @@ const ClaimDetailsCard = ({ claim }) => {
       navigator.clipboard
         .writeText(text)
         .then(() => {
-          toast.success(`${label} copied to clipboard`, {
+          toast.success(`${label} copied`, {
             style: { background: '#A3E635', color: '#4A2C2A' },
           });
         })
@@ -27,7 +27,7 @@ const ClaimDetailsCard = ({ claim }) => {
           });
         });
     } else {
-      toast.error(`No ${label} available to copy`, {
+      toast.error(`No ${label} to copy`, {
         style: { background: '#FECACA', color: '#7F1D1D' },
       });
     }
@@ -36,16 +36,16 @@ const ClaimDetailsCard = ({ claim }) => {
   const handleDownload = () => {
     try {
       const doc = new jsPDF();
-      doc.setFontSize(16);
-      doc.text(`Claim Details (ID: ${claim._id.slice(-6)})`, 20, 20);
-      doc.setFontSize(12);
-      let yOffset = 30;
+      doc.setFontSize(14);
+      doc.text(`Claim Details (ID: ${claim._id.slice(-6)})`, 15, 15);
+      doc.setFontSize(10);
+      let yOffset = 25;
 
       const details = [
         { label: 'Platform', value: platform },
         { label: 'Incident Type', value: incidentType },
         { label: 'Incident Date', value: formattedIncidentDate },
-        { label: 'Reported Earnings Loss', value: formattedAmount },
+        { label: 'Reported Loss', value: formattedAmount },
         { label: 'User ID', value: userId },
         { label: 'Status', value: status },
         { label: 'Submitted', value: formattedSubmittedAt },
@@ -54,12 +54,12 @@ const ClaimDetailsCard = ({ claim }) => {
       ];
 
       details.forEach(({ label, value }) => {
-        doc.text(`${label}: ${value}`, 20, yOffset, { maxWidth: 160 });
-        yOffset += 10;
+        doc.text(`${label}: ${value}`, 15, yOffset, { maxWidth: 170 });
+        yOffset += 8;
       });
 
-      doc.save(`CCI_Claim_Details_${claim._id.slice(-6)}.pdf`);
-      toast.success('Claim details downloaded', {
+      doc.save(`CCI_Claim_${claim._id.slice(-6)}_Details.pdf`);
+      toast.success('Details downloaded', {
         style: { background: '#A3E635', color: '#4A2C2A' },
       });
     } catch (err) {
@@ -75,13 +75,13 @@ const ClaimDetailsCard = ({ claim }) => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="bg-gradient-to-br from-gray-50 to-white p-6 rounded-xl shadow-md border border-appleGreen"
+        className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg shadow-sm border border-appleGreen"
       >
-        <h2 className="text-xl font-semibold text-brown mb-4 flex items-center">
-          <FiUser className="mr-2" /> Claim Details
+        <h2 className="text-base font-semibold text-brown mb-2 flex items-center">
+          <FiUser className="mr-1 h-4 w-4" /> Claim Details
         </h2>
-        <p className="text-gray-600 flex items-center">
-          <FiAlertCircle className="mr-2" /> No claim details available.
+        <p className="text-sm text-gray-600 flex items-center">
+          <FiAlertCircle className="mr-1 h-4 w-4" /> No details available.
         </p>
       </motion.div>
     );
@@ -124,79 +124,79 @@ const ClaimDetailsCard = ({ claim }) => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="bg-gradient-to-br from-gray-50 to-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-appleGreen"
+      className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-appleGreen"
     >
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-brown flex items-center">
-          <FiUser className="mr-2" /> Claim Details
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-lg font-semibold text-brown flex items-center">
+          <FiUser className="mr-1 h-4 w-4" /> Claim Details
         </h2>
         <button
           onClick={handleDownload}
-          className="px-4 py-2 bg-gradient-to-r from-brown to-fadeBrown text-white rounded-lg text-sm font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+          className="px-3 py-1.5 bg-gradient-to-r from-brown to-fadeBrown text-white rounded-md text-xs font-semibold shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300"
         >
-          <FiDownload className="mr-2 inline" /> Download PDF
+          <FiDownload className="mr-1 h-4 w-4 inline" /> PDF
         </button>
       </div>
-      <div className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="space-y-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
           <div>
-            <p className="text-sm text-gray-500 font-medium">Platform</p>
-            <p className="text-base text-brown">{platform}</p>
+            <p className="text-xs text-gray-500 font-medium">Platform</p>
+            <p className="text-sm text-brown">{platform}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500 font-medium">Incident Type</p>
-            <p className="text-base text-brown">{incidentType}</p>
+            <p className="text-xs text-gray-500 font-medium">Incident Type</p>
+            <p className="text-sm text-brown">{incidentType}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500 font-medium">Incident Date</p>
-            <p className="text-base text-brown">{formattedIncidentDate}</p>
+            <p className="text-xs text-gray-500 font-medium">Incident Date</p>
+            <p className="text-sm text-brown">{formattedIncidentDate}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500 font-medium">Reported Earnings Loss</p>
-            <p className="text-base text-brown">{formattedAmount}</p>
+            <p className="text-xs text-gray-500 font-medium">Reported Loss</p>
+            <p className="text-sm text-brown">{formattedAmount}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500 font-medium">User ID</p>
-            <div className="flex items-center space-x-2">
-              <p className="text-base text-brown">{userId.slice(-6)}</p>
+            <p className="text-xs text-gray-500 font-medium">User ID</p>
+            <div className="flex items-center space-x-1">
+              <p className="text-sm text-brown">{userId.slice(-6)}</p>
               <button
                 onClick={() => handleCopy(userId, 'User ID')}
-                className="p-1 text-brown hover:text-appleGreen transition-colors"
+                className="p-0.5 text-brown hover:text-appleGreen transition-colors"
               >
-                <FiCopy />
+                <FiCopy className="h-4 w-4" />
               </button>
             </div>
           </div>
           <div>
-            <p className="text-sm text-gray-500 font-medium">Status</p>
-            <p className={`text-base font-medium ${statusColor}`}>{status}</p>
+            <p className="text-xs text-gray-500 font-medium">Status</p>
+            <p className={`text-sm font-medium ${statusColor}`}>{status}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500 font-medium">Submitted</p>
-            <p className="text-base text-brown">{formattedSubmittedAt}</p>
+            <p className="text-xs text-gray-500 font-medium">Submitted</p>
+            <p className="text-sm text-brown">{formattedSubmittedAt}</p>
           </div>
           <div>
-            <p className="text-sm text-gray-500 font-medium">Platform Notification</p>
-            <div className="flex items-center space-x-2">
-              <p className="text-base text-brown truncate max-w-[200px]">{platformNotification}</p>
+            <p className="text-xs text-gray-500 font-medium">Notification</p>
+            <div className="flex items-center space-x-1">
+              <p className="text-sm text-brown truncate max-w-[150px]">{platformNotification}</p>
               <button
                 onClick={() => handleCopy(platformNotification, 'Platform Notification')}
-                className="p-1 text-brown hover:text-appleGreen transition-colors"
+                className="p-0.5 text-brown hover:text-appleGreen transition-colors"
               >
-                <FiCopy />
+                <FiCopy className="h-4 w-4" />
               </button>
             </div>
           </div>
         </div>
         <div
-          className="flex justify-between items-center p-4 cursor-pointer hover:bg-appleGreen/10 transition-colors rounded-lg border border-gray-200"
+          className="flex justify-between items-center p-2 cursor-pointer hover:bg-appleGreen/10 transition-colors rounded-md border border-gray-200"
           onClick={toggleExpand}
         >
-          <p className="text-base text-brown font-medium">Incident Description</p>
+          <p className="text-sm text-brown font-medium">Incident Description</p>
           {isExpanded ? (
-            <FiChevronUp className="text-brown" />
+            <FiChevronUp className="text-brown h-4 w-4" />
           ) : (
-            <FiChevronDown className="text-brown" />
+            <FiChevronDown className="text-brown h-4 w-4" />
           )}
         </div>
         <AnimatePresence>
@@ -206,14 +206,14 @@ const ClaimDetailsCard = ({ claim }) => {
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="p-4 border-t border-gray-200"
+              className="p-2 border-t border-gray-200"
             >
-              <p className="text-sm text-gray-600">{incidentDescription}</p>
+              <p className="text-xs text-gray-600">{incidentDescription}</p>
               <button
                 onClick={() => handleCopy(incidentDescription, 'Incident Description')}
-                className="mt-2 p-1 text-brown hover:text-appleGreen transition-colors"
+                className="mt-1 p-0.5 text-brown hover:text-appleGreen transition-colors"
               >
-                <FiCopy className="inline mr-1" /> Copy Description
+                <FiCopy className="h-4 w-4 inline mr-1" /> Copy
               </button>
             </motion.div>
           )}

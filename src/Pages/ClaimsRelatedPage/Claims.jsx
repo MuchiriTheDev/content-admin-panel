@@ -43,6 +43,7 @@ const Claims = () => {
           flagHighRiskCreators(filters),
         ]);
         setAnalytics(analyticsRes.data.analytics);
+        console.log(analyticsRes.data.analytics);
         setClaims(claimsRes.data.claims);
         setPagination(claimsRes.data.pagination);
         setUrgentClaims(urgentRes.data.claims);

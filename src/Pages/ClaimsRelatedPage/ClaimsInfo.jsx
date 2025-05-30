@@ -89,7 +89,7 @@ const ClaimsInfo = () => {
       toast.success('Audit insights updated', {
         style: { background: '#A3E635', color: '#4A2C2A' },
       });
-      handleAction(); // Refresh claim data
+      handleAction();
     } catch (err) {
       toast.error('Failed to process audit insights', {
         style: { background: '#FECACA', color: '#7F1D1D' },
@@ -107,38 +107,38 @@ const ClaimsInfo = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="p-6 md:p-10 bg-gradient-to-br from-gray-50 to-white rounded-2xl shadow-2xl border border-appleGreen mx-auto my-8 max-w-6xl"
+        className="p-4 md:p-6 bg-gradient-to-br from-gray-50 to-white rounded-xl shadow-xl border border-appleGreen mx-auto my-4 max-w-4xl"
       >
         {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-brown tracking-tight">
-              Claim Details (ID: {id.slice(-6)})
+            <h1 className="text-xl md:text-2xl font-bold text-brown tracking-tight">
+              Claim (ID: {id.slice(-6)})
             </h1>
-            <p className="text-xs md:text-sm lg:text-base text-gray-600 mt-2">
-              View and manage individual claim details.
+            <p className="text-xs text-gray-600 mt-1">
+              View and manage claim details.
             </p>
           </div>
           {claim && (
             <button
               onClick={() => setReviewModalOpen(true)}
-              className="mt-4 md:mt-0 inline-flex items-center px-6 py-3 bg-gradient-to-r from-brown to-fadeBrown rounded-lg font-semibold text-white shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+              className="mt-3 md:mt-0 inline-flex items-center px-4 py-2 bg-gradient-to-r from-brown to-fadeBrown rounded-lg text-xs font-semibold text-white shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300"
             >
-              <FiCheckCircle className="mr-2" />
-              Review Claim
+              <FiCheckCircle className="mr-1 h-4 w-4" />
+              Review
             </button>
           )}
         </div>
 
         {/* Loading State */}
         {loading && (
-          <div className="text-center py-20">
+          <div className="text-center py-10">
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-              className="inline-block h-12 w-12 border-4 border-appleGreen border-t-transparent rounded-full"
+              className="inline-block h-8 w-8 border-4 border-appleGreen border-t-transparent rounded-full"
             ></motion.div>
-            <p className="text-brown mt-4 text-lg font-medium">Loading claim details...</p>
+            <p className="text-brown mt-2 text-sm font-medium">Loading claim...</p>
           </div>
         )}
 
@@ -147,16 +147,16 @@ const ClaimsInfo = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="bg-red-100 text-red-900 p-5 rounded-lg mb-6 flex items-center"
+            className="bg-red-100 text-red-900 p-3 rounded-lg mb-4 flex items-center"
           >
-            <FiAlertCircle className="mr-3 text-xl" />
+            <FiAlertCircle className="mr-2 text-base" />
             {error}
           </motion.div>
         )}
 
         {/* Main Content */}
         {!loading && !error && claim && (
-          <div className="space-y-10">
+          <div className="space-y-6">
             {/* Action Buttons */}
             <ActionButtons
               claimId={id}
@@ -188,6 +188,7 @@ const ClaimsInfo = () => {
           onClose={() => setReviewModalOpen(false)}
           claimId={id}
           onSubmit={handleReviewSubmit}
+          claim={claim}
         />
       </motion.div>
     </PageAbsorber>

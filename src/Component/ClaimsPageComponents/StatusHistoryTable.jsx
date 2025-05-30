@@ -14,7 +14,7 @@ const StatusHistoryTable = ({ history, claimId }) => {
       navigator.clipboard
         .writeText(text)
         .then(() => {
-          toast.success(`${label} copied to clipboard`, {
+          toast.success(`${label} copied`, {
             style: { background: '#A3E635', color: '#4A2C2A' },
           });
         })
@@ -24,7 +24,7 @@ const StatusHistoryTable = ({ history, claimId }) => {
           });
         });
     } else {
-      toast.error(`No ${label} available to copy`, {
+      toast.error(`No ${label} to copy`, {
         style: { background: '#FECACA', color: '#7F1D1D' },
       });
     }
@@ -33,10 +33,10 @@ const StatusHistoryTable = ({ history, claimId }) => {
   const handleDownloadPDF = () => {
     try {
       const doc = new jsPDF();
-      doc.setFontSize(16);
-      doc.text(`Claim Status History (ID: ${claimId.slice(-6)})`, 20, 20);
-      doc.setFontSize(12);
-      let yOffset = 30;
+      doc.setFontSize(14);
+      doc.text(`Claim History (ID: ${claimId.slice(-6)})`, 15, 15);
+      doc.setFontSize(10);
+      let yOffset = 25;
 
       history.forEach((entry, index) => {
         const status = entry.status || 'N/A';
@@ -45,22 +45,22 @@ const StatusHistoryTable = ({ history, claimId }) => {
         const updatedBy = entry.updatedBy ? entry.updatedBy.slice(-6) : 'N/A';
         const entryId = entry._id ? entry._id.slice(-6) : 'N/A';
 
-        doc.text(`Entry ${index + 1}`, 20, yOffset);
+        doc.text(`Entry ${index + 1}`, 15, yOffset);
+        yOffset += 8;
+        doc.text(`Status: ${status}`, 20, yOffset);
+        yOffset += 8;
+        doc.text(`Date: ${date}`, 20, yOffset);
+        yOffset += 8;
+        doc.text(`Notes: ${notes}`, 20, yOffset, { maxWidth: 170 });
+        yOffset += 8;
+        doc.text(`Updated By: ${updatedBy}`, 20, yOffset);
+        yOffset += 8;
+        doc.text(`Entry ID: ${entryId}`, 20, yOffset);
         yOffset += 10;
-        doc.text(`Status: ${status}`, 25, yOffset);
-        yOffset += 10;
-        doc.text(`Date: ${date}`, 25, yOffset);
-        yOffset += 10;
-        doc.text(`Notes: ${notes}`, 25, yOffset, { maxWidth: 160 });
-        yOffset += 10;
-        doc.text(`Updated By: ${updatedBy}`, 25, yOffset);
-        yOffset += 10;
-        doc.text(`Entry ID: ${entryId}`, 25, yOffset);
-        yOffset += 15;
       });
 
-      doc.save(`CCI_Claim_${claimId.slice(-6)}_Status_History.pdf`);
-      toast.success('Status history downloaded as PDF', {
+      doc.save(`CCI_Claim_${claimId.slice(-6)}_History.pdf`);
+      toast.success('History downloaded as PDF', {
         style: { background: '#A3E635', color: '#4A2C2A' },
       });
     } catch (err) {
@@ -90,13 +90,13 @@ const StatusHistoryTable = ({ history, claimId }) => {
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.setAttribute('href', url);
-      link.setAttribute('download', `CCI_Claim_${claimId.slice(-6)}_Status_History.csv`);
+      link.setAttribute('download', `CCI_Claim_${claimId.slice(-6)}_History.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      toast.success('Status history downloaded as CSV', {
+      toast.success('History downloaded as CSV', {
         style: { background: '#A3E635', color: '#4A2C2A' },
       });
     } catch (err) {
@@ -112,13 +112,13 @@ const StatusHistoryTable = ({ history, claimId }) => {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="bg-gradient-to-br from-gray-50 to-white p-6 rounded-xl shadow-md border border-appleGreen"
+        className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg shadow-sm border border-appleGreen"
       >
-        <h2 className="text-xl font-semibold text-brown mb-4 flex items-center">
-          <RiFileHistoryFill className="mr-2" /> Status History
+        <h2 className="text-base font-semibold text-brown mb-2 flex items-center">
+          <RiFileHistoryFill className="mr-1 h-4 w-4" /> Status History
         </h2>
-        <p className="text-gray-600 flex items-center">
-          <FiAlertCircle className="mr-2" /> No status history available.
+        <p className="text-gray-600 text-sm flex items-center">
+          <FiAlertCircle className="mr-1 h-4 w-4" /> No history available.
         </p>
       </motion.div>
     );
@@ -129,36 +129,36 @@ const StatusHistoryTable = ({ history, claimId }) => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="bg-gradient-to-br from-gray-50 to-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-appleGreen"
+      className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-appleGreen"
     >
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-brown flex items-center">
-          <RiFileHistoryFill className="mr-2" /> Status History
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-lg font-semibold text-brown flex items-center">
+          <RiFileHistoryFill className="mr-1 h-4 w-4" /> Status History
         </h2>
-        <div className="flex space-x-2">
+        <div className="flex space-x-1">
           <button
             onClick={handleDownloadPDF}
-            className="px-4 py-2 bg-gradient-to-r from-brown to-fadeBrown text-white rounded-lg text-sm font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+            className="px-3 py-1.5 bg-gradient-to-r from-brown to-fadeBrown text-white rounded-md text-xs font-semibold shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300"
           >
-            <FiDownload className="mr-2 inline" /> PDF
+            <FiDownload className="mr-1 h-4 w-4 inline" /> PDF
           </button>
           <button
             onClick={handleDownloadCSV}
-            className="px-4 py-2 bg-yellowGreen text-brown rounded-lg text-sm font-semibold shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+            className="px-3 py-1.5 bg-yellowGreen text-brown rounded-md text-xs font-semibold shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300"
           >
-            <FiDownload className="mr-2 inline" /> CSV
+            <FiDownload className="mr-1 h-4 w-4 inline" /> CSV
           </button>
         </div>
       </div>
       <button
         onClick={() => setShowHistory(!showHistory)}
-        className="flex items-center justify-between w-full text-base font-semibold text-brown mb-6 bg-appleGreen/10 p-3 rounded-lg hover:bg-appleGreen/20 transition-colors"
+        className="flex items-center justify-between w-full text-sm font-semibold text-brown mb-4 bg-appleGreen/10 p-2 rounded-md hover:bg-appleGreen/20 transition-colors"
       >
         <span className="flex items-center">
-          <RiFileHistoryFill className="mr-2" />
+          <RiFileHistoryFill className="mr-1 h-4 w-4" />
           {showHistory ? 'Hide History' : 'Show History'}
         </span>
-        {showHistory ? <FiChevronUp /> : <FiChevronDown />}
+        {showHistory ? <FiChevronUp className="h-4 w-4" /> : <FiChevronDown className="h-4 w-4" />}
       </button>
       <AnimatePresence>
         {showHistory && (
@@ -170,14 +170,14 @@ const StatusHistoryTable = ({ history, claimId }) => {
             className="relative"
           >
             <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-appleGreen/50 scrollbar-track-gray-100">
-              <table className="w-full min-w-[900px] text-left table-auto">
+              <table className="w-full min-w-[600px] text-left table-auto">
                 <thead>
-                  <tr className="text-sm text-gray-500 bg-appleGreen/10 sticky top-0 z-10">
-                    <th className="p-4 font-medium">Status</th>
-                    <th className="p-4 font-medium">Date</th>
-                    <th className="p-4 font-medium">Notes</th>
-                    <th className="p-4 font-medium">Updated By</th>
-                    <th className="p-4 font-medium">Entry ID</th>
+                  <tr className="text-xs text-gray-500 bg-appleGreen/10 sticky top-0 z-10">
+                    <th className="p-2 font-medium">Status</th>
+                    <th className="p-2 font-medium">Date</th>
+                    <th className="p-2 font-medium">Notes</th>
+                    <th className="p-2 font-medium">Updated By</th>
+                    <th className="p-2 font-medium">Entry ID</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -201,33 +201,33 @@ const StatusHistoryTable = ({ history, claimId }) => {
                         transition={{ duration: 0.2, delay: index * 0.1 }}
                         className="border-t border-gray-100 hover:bg-appleGreen/10"
                       >
-                        <td className={`p-4 text-base ${statusColor}`}>
+                        <td className={`p-2 text-sm ${statusColor}`}>
                           {entry.status || 'N/A'}
                         </td>
-                        <td className="p-4 text-base text-brown">
+                        <td className="p-2 text-sm text-brown">
                           {entry.date ? new Date(entry.date).toLocaleString() : 'N/A'}
                         </td>
-                        <td className="p-4 text-base text-brown flex items-center space-x-2">
-                          <span className="truncate max-w-[300px]">{entry.notes || 'N/A'}</span>
+                        <td className="p-2 text-sm text-brown flex items-center space-x-1">
+                          <span className="truncate max-w-[200px]">{entry.notes || 'N/A'}</span>
                           <button
                             onClick={() => handleCopy(entry.notes, 'Notes')}
-                            className="p-1 text-brown hover:text-appleGreen transition-colors"
+                            className="p-0.5 text-brown hover:text-appleGreen transition-colors"
                           >
-                            <FiCopy />
+                            <FiCopy className="h-4 w-4" />
                           </button>
                         </td>
-                        <td className="p-4 text-base text-brown flex items-center space-x-2">
+                        <td className="p-2 text-sm text-brown flex items-center space-x-1">
                           <span>{entry.updatedBy ? entry.updatedBy.slice(-6) : 'N/A'}</span>
                           {entry.updatedBy && (
                             <button
                               onClick={() => handleCopy(entry.updatedBy, 'Updated By')}
-                              className="p-1 text-brown hover:text-appleGreen transition-colors"
+                              className="p-0.5 text-brown hover:text-appleGreen transition-colors"
                             >
-                              <FiCopy />
+                              <FiCopy className="h-4 w-4" />
                             </button>
                           )}
                         </td>
-                        <td className="p-4 text-base text-brown">
+                        <td className="p-2 text-sm text-brown">
                           {entry._id ? entry._id.slice(-6) : 'N/A'}
                         </td>
                       </motion.tr>
@@ -236,8 +236,8 @@ const StatusHistoryTable = ({ history, claimId }) => {
                 </tbody>
               </table>
             </div>
-            <div className="text-center text-sm text-gray-500 mt-2">
-              Scroll left or right to view more
+            <div className="text-center text-xs text-gray-500 mt-1">
+              Scroll to view more
             </div>
           </motion.div>
         )}
