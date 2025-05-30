@@ -69,7 +69,7 @@ export const getPendingDeadlineClaims = async () =>
 // Get a single claim by ID (claimsController.js)
 // GET /api/claims/:id
 export const getClaimById = async (claimId) =>
-  api.get(`/claims/admin/${claimId}`);
+  api.get(`/admin-claims/admin/${claimId}`);
 
 // AI evaluate a claim (claimsController.js)
 // POST /api/claims/:id/evaluate-ai

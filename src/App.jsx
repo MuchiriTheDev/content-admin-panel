@@ -11,6 +11,7 @@ import Login from './Pages/AuthRelatedPage/Login'
 import toast from 'react-hot-toast'
 import UserInfo from './Pages/HomeRelatedPages/UserInfo'
 import ContractDetails from './Pages/ContractsRelatedPage/ContractDetails'
+import ClaimsInfo from './Pages/ClaimsRelatedPage/ClaimsInfo'
 
 export const backendUrl = `${import.meta.env.VITE_BACKEND_URL}/api`
 
@@ -36,7 +37,7 @@ function App() {
           <Route path='/premiums' element={<Premiums />} />
           <Route path='/premiums/:id' element={<Premiums />} />
           <Route path='/claims' element={<Claims />} />
-          <Route path='/claims/:id' element={<Claims />} />
+          <Route path='/claims/:id' element={<ClaimsInfo />} />
           <Route path='/login' element={<Login/>} />
         </Routes>
         <Toaster

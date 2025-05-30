@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiCheckCircle } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
-import { reviewClaimManual } from '../../services/api';
+import { reviewClaimManual } from '../../Resources/Apiservice';
 
 const ReviewClaimForm = ({ isOpen, onClose, claimId, onSubmit }) => {
   const [formData, setFormData] = useState({

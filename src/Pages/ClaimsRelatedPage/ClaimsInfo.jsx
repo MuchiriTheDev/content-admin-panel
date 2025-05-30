@@ -1,24 +1,24 @@
 // src/pages/ClaimsInfo.jsx
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiAlertCircle } from 'react-icons/fi';
+import { FiAlertCircle, FiCheckCircle } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
-import PageAbsorber from '../Resources/PageAbsorber';
+import PageAbsorber from '../../Resources/PageAbsorber';
 import {
   getClaimById,
   getClaimHistory,
   evaluateClaimAI,
   auditClaimsWithAI,
   markClaimPaid,
-} from '../services/api';
-import ClaimDetailsCard from '../components/claims/ClaimDetailsCard';
-import EvidenceViewer from '../components/claims/EvidenceViewer';
-import EvaluationCard from '../components/claims/EvaluationCard';
-import StatusHistoryTable from '../components/claims/StatusHistoryTable';
-import AuditInsightsCard from '../components/claims/AuditInsightsCard';
-import ReviewClaimForm from '../components/claims/ReviewClaimForm';
-import ActionButtons from '../components/claims/ActionButtons';
+} from '../../Resources/Apiservice';
+import ActionButtons from '../../Component/ClaimsPageComponents/ActionButtons';
+import ClaimDetailsCard from '../../Component/ClaimsPageComponents/ClaimDetailsCard';
+import EvidenceViewer from '../../Component/ClaimsPageComponents/EvidenceViewer';
+import EvaluationCard from '../../Component/ClaimsPageComponents/EvaluationCard';
+import AuditInsightsCard from '../../Component/ClaimsPageComponents/AuditInsightsCard';
+import StatusHistoryTable from '../../Component/ClaimsPageComponents/StatusHistoryTable';
+import ReviewClaimForm from '../../Component/ClaimsPageComponents/ReviewClaimForm';
 
 const ClaimsInfo = () => {
   const { id } = useParams();
@@ -37,12 +37,18 @@ const ClaimsInfo = () => {
           getClaimById(id),
           getClaimHistory(id),
         ]);
-        setClaim(claimRes.data.claim);
-        setHistory(historyRes.data.data.history.statusChanges);
-        setLoading(false);
+        if (claimRes.data.success && historyRes.data.success) {
+          setClaim(claimRes.data.claim);
+          console.log('Claim Data:', claimRes.data.claim);
+          setHistory(claimRes.data.claim.statusHistory?.history || []);
+          setLoading(false);
+        } else {
+          throw new Error('Invalid response from server');
+        }
       } catch (err) {
-        setError(err.response?.data?.error || 'Failed to fetch claim data');
-        toast.error('Failed to fetch claim data', {
+        const errorMessage = err.response?.data?.error || 'Failed to fetch claim data';
+        setError(errorMessage);
+        toast.error(errorMessage, {
           style: { background: '#FECACA', color: '#7F1D1D' },
         });
         setLoading(false);
@@ -52,23 +58,46 @@ const ClaimsInfo = () => {
   }, [id]);
 
   const handleAction = async () => {
-    // Refresh claim and history after an action
     try {
       const [claimRes, historyRes] = await Promise.all([
         getClaimById(id),
         getClaimHistory(id),
       ]);
-      setClaim(claimRes.data.claim);
-      setHistory(historyRes.data.data.history.statusChanges);
+      if (claimRes.data.success && historyRes.data.success) {
+        toast.success('Successfully refreshed data', {
+          style: { background: '#A3E635', color: '#4A2C2A' },
+        });
+        setClaim(claimRes.data.claim);
+        setHistory(claimRes.data.claim.statusHistory?.history || []);
+      } else {
+        throw new Error('Invalid response from server');
+      }
     } catch (err) {
-      toast.error('Failed to refresh claim data', {
+      const errorMessage = err.response?.data?.error || 'Failed to refresh claim data';
+      toast.error(errorMessage, {
+        style: { background: '#FECACA', color: '#7F1D1D' },
+      });
+    }
+  };
+
+  const handleAudit = (insights) => {
+    try {
+      if (!Array.isArray(insights)) {
+        throw new Error('Invalid audit insights format');
+      }
+      setAuditInsights(insights);
+      toast.success('Audit insights updated', {
+        style: { background: '#A3E635', color: '#4A2C2A' },
+      });
+      handleAction(); // Refresh claim data
+    } catch (err) {
+      toast.error('Failed to process audit insights', {
         style: { background: '#FECACA', color: '#7F1D1D' },
       });
     }
   };
 
   const handleReviewSubmit = async () => {
-    // Refresh claim and history after review
     handleAction();
   };
 
@@ -131,24 +160,25 @@ const ClaimsInfo = () => {
             {/* Action Buttons */}
             <ActionButtons
               claimId={id}
-              status={claim.statusHistory.history[claim.statusHistory.history.length - 1].status}
+              status={claim.statusHistory?.history?.[claim.statusHistory.history.length - 1]?.status}
               onAction={handleAction}
+              onAudit={handleAudit}
             />
 
             {/* Claim Details */}
-            <ClaimDetailsCard claimDetails={claim.claimDetails} />
+            <ClaimDetailsCard claim={claim} />
 
             {/* Evidence */}
-            <EvidenceViewer evidence={claim.evidence} />
+            <EvidenceViewer evidence={claim.evidence || { files: [], affectedContent: [] }} />
 
             {/* Evaluation */}
-            <EvaluationCard evaluation={claim.evaluation} />
+            <EvaluationCard evaluation={claim.evaluation || {}} />
 
             {/* Audit Insights */}
-            {auditInsights.length > 0 && <AuditInsightsCard insights={auditInsights} />}
+            {auditInsights.length > 0 && <AuditInsightsCard insights={auditInsights} claimId={id} />}
 
             {/* Status History */}
-            <StatusHistoryTable history={history} />
+            <StatusHistoryTable history={claim.statusHistory?.history || []} claimId={id} />
           </div>
         )}
 

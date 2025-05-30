@@ -23,12 +23,12 @@ import {
   analyzeContract,
   updateContract,
   terminateContract,
-  getContractHistory, // New API function
+  getContractHistory,
 } from '../../Resources/Apiservice';
 import InsightCard from '../../Component/HomePageComponents/InsightCard';
 import UpdateContractForm from '../../Component/ContractsPageComponents/UpdateContractForm';
 import TerminateConfirmModal from '../../Component/ContractsPageComponents/TerminateConfirmModal';
-import ChangeStatusModal from '../../Component/ContractsPageComponents/ChangeStatusModal'; // New modal component
+import ChangeStatusModal from '../../Component/ContractsPageComponents/ChangeStatusModal';
 
 const ContractDetails = () => {
   const { id } = useParams();
@@ -60,7 +60,7 @@ const ContractDetails = () => {
       } catch (err) {
         setError(err.response?.data?.error || 'Failed to fetch contract data');
         toast.error('Failed to fetch contract data', {
-          style: { background: '#FECACA', color: '#7F1D1D' },
+          style: { background: '#aa783256', color: '#4F391A' },
         });
         setLoading(false);
       }
@@ -72,7 +72,7 @@ const ContractDetails = () => {
     setContract(updatedContract);
     setIsUpdateModalOpen(false);
     toast.success('Contract updated successfully', {
-      style: { background: '#A3E635', color: '#4A2C2A' },
+      style: { background: '#7BBF2A', color: '#4F391A' },
     });
   };
 
@@ -88,7 +88,7 @@ const ContractDetails = () => {
     setContract(updatedContract);
     setIsChangeStatusModalOpen(false);
     toast.success('Contract status updated successfully', {
-      style: { background: '#A3E635', color: '#4A2C2A' },
+      style: { background: '#7BBF2A', color: '#4F391A' },
     });
   };
 
@@ -97,12 +97,12 @@ const ContractDetails = () => {
       whileHover={{ scale: 1.05 }}
       className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${
         status === 'Pending'
-          ? 'from-yellow-200 to-yellow-300 text-yellow-900'
+          ? 'from-yellowGreen to-appleGreen text-brown'
           : status === 'Approved'
-          ? 'from-appleGreen to-green-400 text-brown'
+          ? 'from-appleGreen to-yellowGreen text-brown'
           : status === 'Rejected'
-          ? 'from-red-200 to-red-300 text-red-900'
-          : 'from-red-300 to-red-400 text-red-900'
+          ? 'from-fadeBrown to-white text-brown'
+          : 'from-fadeBrown to-white text-brown'
       }`}
     >
       {status || 'N/A'}
@@ -142,7 +142,7 @@ const ContractDetails = () => {
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="p-4 md:p-8 lg:p-10 bg-gradient-to-br from-gray-50 to-white min-h-screen"
+        className="p-4 md:p-8 lg:p-10 bg-white min-h-screen"
       >
         {/* Hero Banner */}
         {contract && (
@@ -167,7 +167,7 @@ const ContractDetails = () => {
           <div className="flex flex-col md:flex-row justify-between items-start mb-8">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold text-brown">Contract Profile</h2>
-              <p className="text-gray-600 mt-2 text-sm md:text-base">
+              <p className="text-gray-700 mt-2 text-sm md:text-base">
                 Manage contract details, history, and AI-driven insights.
               </p>
             </div>
@@ -203,7 +203,7 @@ const ContractDetails = () => {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={handleTerminate}
-                    className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-400 text-white rounded-lg font-semibold hover:bg-red-700 transition-all duration-200"
+                    className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-red-600 to-red-200 text-white rounded-lg font-semibold hover:bg-red-800 transition-all duration-200"
                   >
                     <FaTrashAlt className="mr-2" />
                     Terminate
@@ -228,28 +228,28 @@ const ContractDetails = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="bg-red-100 text-red-900 p-5 rounded-lg mb-6 flex items-center justify-center"
+              className="bg-red-300 text-brown p-5 rounded-lg mb-6 flex items-center justify-center"
             >
               <FaExclamationCircle className="mr-3 text-xl" />
               {error}
             </motion.div>
           ) : (
-            <div className="w-full">
+            <div className="w-full space-y-5">
               {/* Contract Info */}
               <motion.div
                 id="contract"
-                initial={{ opacity: 0, y: 10, scale: 0 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
                 whileHover={{ scale: 1.02 }}
                 className="bg-white border-2 border-appleGreen rounded-lg p-6 shadow-md w-full"
               >
-                <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center gap-2 mb-4 w-full">
                   <FaShieldAlt className="text-xl text-yellowGreen" />
                   <h2 className="text-lg md:text-xl font-semibold text-brown">Contract Information</h2>
                 </div>
-                <p className="text-gray-600 text-sm mb-4">Details about the contract and user information.</p>
-                <div className="">
+                <p className="text-gray-700 text-sm mb-4">Details about the contract and user information.</p>
+                <div className="space-y-4">
                   {[
                     {
                       label: 'Full Name',
@@ -293,10 +293,10 @@ const ContractDetails = () => {
                     <div
                       key={index}
                       className={`flex w-full justify-between items-center p-3 rounded-md ${
-                        index % 2 === 0 ? 'bg-gray-50' : 'bg-white'
+                        index % 2 === 0 ? 'bg-white' : 'bg-fadeBrown'
                       }`}
                     >
-                      <p className="text-sm font-medium text-gray-600">{item.label}</p>
+                      <p className="text-sm font-medium text-brown">{item.label}</p>
                       <p className="text-base text-brown">{item.value}</p>
                     </div>
                   ))}
@@ -316,10 +316,10 @@ const ContractDetails = () => {
                   <FaDollarSign className="text-xl text-yellowGreen" />
                   <h2 className="text-lg md:text-xl font-semibold text-brown">Financial Information</h2>
                 </div>
-                <p className="text-gray-600 text-sm mb-4">Financial details related to the contract.</p>
+                <p className="text-gray-700 text-sm mb-4">Financial details related to the contract.</p>
                 <div className="space-y-4">
-                  <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
-                    <p className="text-sm font-medium text-gray-600">Monthly Earnings</p>
+                  <div className="bg-fadeBrown p-4 rounded-lg shadow-sm">
+                    <p className="text-sm font-medium text-brown">Monthly Earnings</p>
                     <p className="text-base text-brown font-semibold">
                       {contract.financialInfo.monthlyEarnings
                         ? `${contract.financialInfo.currency || 'KES'} ${contract.financialInfo.monthlyEarnings.toFixed(2)}`
@@ -343,16 +343,16 @@ const ContractDetails = () => {
                     <FaCreditCard className="text-xl text-yellowGreen" />
                     <h2 className="text-lg md:text-xl font-semibold text-brown">Premium Details</h2>
                   </div>
-                  <p className="text-gray-600 text-sm mb-4">Information about the contract’s insurance premium.</p>
+                  <p className="text-gray-700 text-sm mb-4">Information about the contract’s insurance premium.</p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Final Amount (KES)</p>
+                      <p className="text-sm font-medium text-brown">Final Amount (KES)</p>
                       <p className="text-base text-brown">
                         {contract.premium.finalAmount ? contract.premium.finalAmount.toFixed(2) : 'N/A'}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Final Percentage</p>
+                      <p className="text-sm font-medium text-brown">Final Percentage</p>
                       <p className="text-base text-brown">
                         {contract.premium.finalPercentage
                           ? `${contract.premium.finalPercentage.toFixed(2)}%`
@@ -360,13 +360,13 @@ const ContractDetails = () => {
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Payment Status</p>
+                      <p className="text-sm font-medium text-brown">Payment Status</p>
                       <p className="text-base text-brown">
                         {contract.premium.paymentStatus?.status || 'N/A'}
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Due Date</p>
+                      <p className="text-sm font-medium text-brown">Due Date</p>
                       <p className="text-base text-brown">
                         {contract.premium.paymentStatus?.dueDate
                           ? moment(contract.premium.paymentStatus.dueDate).format('MMM D, YYYY')
@@ -374,7 +374,7 @@ const ContractDetails = () => {
                       </p>
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-gray-600">Risk Explanation</p>
+                      <p className="text-sm font-medium text-brown">Risk Explanation</p>
                       <p className="text-base text-brown">
                         {contract.premium.adjustmentFactors?.riskExplanation || 'N/A'}
                       </p>
@@ -397,7 +397,7 @@ const ContractDetails = () => {
                     <FaBriefcase className="text-xl text-yellowGreen" />
                     <h2 className="text-lg md:text-xl font-semibold text-brown">Social Platforms</h2>
                   </div>
-                  <p className="text-gray-600 text-sm mb-4">Social media platforms associated with the contract.</p>
+                  <p className="text-gray-700 text-sm mb-4">Social media platforms associated with the contract.</p>
                   <div className="overflow-x-auto">
                     <table className="w-full text-left">
                       <thead>
@@ -416,8 +416,8 @@ const ContractDetails = () => {
                             initial={{ opacity: 0, y: 5 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.2, delay: index * 0.05 }}
-                            className={`border-b border-gray-200 hover:bg-gray-50 transition-colors duration-200 ${
-                              index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                            className={`border-b border-fadeBrown hover:bg-fadeBrown transition-colors duration-200 ${
+                              index % 2 === 0 ? 'bg-white' : 'bg-fadeBrown'
                             }`}
                           >
                             <td className="p-3 text-brown">{platform.name || 'N/A'}</td>
@@ -450,9 +450,9 @@ const ContractDetails = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: 0.3 }}
-                  className="bg-white border-2 border-appleGreen rounded-lg p-6 text-center text-gray-600 shadow-md"
+                  className="bg-white border-2 border-appleGreen rounded-lg p-6 text-center text-brown shadow-md"
                 >
-                  <FaBriefcase className="mx-auto text-2xl text-gray-400 mb-2" />
+                  <FaBriefcase className="mx-auto text-2xl text-brown mb-2" />
                   No social platforms found
                 </motion.div>
               )}
@@ -471,21 +471,21 @@ const ContractDetails = () => {
                     <FaFileAlt className="text-xl text-yellowGreen" />
                     <h2 className="text-lg md:text-xl font-semibold text-brown">Claims</h2>
                   </div>
-                  <p className="text-gray-600 text-sm mb-4">History of insurance claims associated with the contract.</p>
+                  <p className="text-gray-700 text-sm mb-4">History of insurance claims associated with the contract.</p>
                   <div className="space-y-4">
                     {contract.claims.map((claim, index) => (
-                      <div key={index} className="border-b border-gray-200 pb-4 last:border-b-0">
+                      <div key={index} className="border-b border-fadeBrown pb-4 last:border-b-0">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <div>
-                            <p className="text-sm font-medium text-gray-600">Incident Type</p>
+                            <p className="text-sm font-medium text-brown">Incident Type</p>
                             <p className="text-base text-brown">{claim.incidentType || 'N/A'}</p>
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-gray-600">Status</p>
+                            <p className="text-sm font-medium text-brown">Status</p>
                             <p className="text-base text-brown">{claim.status || 'N/A'}</p>
                           </div>
                           <div>
-                            <p className="text-sm font-medium text-gray-600">Payout Amount</p>
+                            <p className="text-sm font-medium text-brown">Payout Amount</p>
                             <p className="text-base text-brown">
                               {claim.payoutAmount ? `KES ${claim.payoutAmount.toFixed(2)}` : 'N/A'}
                             </p>
@@ -501,9 +501,9 @@ const ContractDetails = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: 0.4 }}
-                  className="bg-white border-2 border-appleGreen rounded-lg p-6 text-center text-gray-600 shadow-md"
+                  className="bg-white border-2 border-appleGreen rounded-lg p-6 text-center text-brown shadow-md"
                 >
-                  <FaFileAlt className="mx-auto text-2xl text-gray-400 mb-2" />
+                  <FaFileAlt className="mx-auto text-2xl text-brown mb-2" />
                   No claims found
                 </motion.div>
               )}
@@ -521,7 +521,7 @@ const ContractDetails = () => {
                   <FaFileAlt className="text-xl text-yellowGreen" />
                   <h2 className="text-lg md:text-xl font-semibold text-brown">Contract History</h2>
                 </div>
-                <p className="text-gray-600 text-sm mb-4">Record of contract status changes and renewals.</p>
+                <p className="text-gray-700 text-sm mb-4">Record of contract status changes and renewals.</p>
                 {historyEvents.length > 0 ? (
                   <div className="overflow-x-auto">
                     <table className="w-full text-left table-fixed">
@@ -540,8 +540,8 @@ const ContractDetails = () => {
                             initial={{ opacity: 0, y: 5 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.2, delay: index * 0.05 }}
-                            className={`border-b border-gray-200 hover:bg-gray-50 transition-colors duration-200 ${
-                              index % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                            className={`border-b border-fadeBrown hover:bg-fadeBrown transition-colors duration-200 ${
+                              index % 2 === 0 ? 'bg-white' : 'bg-fadeBrown'
                             }`}
                           >
                             <td className="p-3 text-brown truncate">{event.type}</td>
@@ -556,8 +556,8 @@ const ContractDetails = () => {
                           Array.from({ length: rowsPerPage - paginatedHistory.length }).map((_, index) => (
                             <tr
                               key={`empty-${index}`}
-                              className={`border-b border-gray-200 ${
-                                (paginatedHistory.length + index) % 2 === 0 ? 'bg-white' : 'bg-gray-50'
+                              className={`border-b border-fadeBrown ${
+                                (paginatedHistory.length + index) % 2 === 0 ? 'bg-white' : 'bg-fadeBrown'
                               }`}
                             >
                               <td className="p-3"> </td>
@@ -570,7 +570,7 @@ const ContractDetails = () => {
                     </table>
                     {/* Pagination Controls */}
                     <div className="flex justify-between items-center mt-4">
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-brown">
                         Showing {Math.min((currentPage - 1) * rowsPerPage + 1, historyEvents.length)}–
                         {Math.min(currentPage * rowsPerPage, historyEvents.length)} of {historyEvents.length}
                       </p>
@@ -580,7 +580,7 @@ const ContractDetails = () => {
                           whileTap={{ scale: 0.9 }}
                           onClick={() => handlePageChange(currentPage - 1)}
                           disabled={currentPage === 1}
-                          className="p-2 bg-gray-200 text-brown rounded-lg disabled:opacity-50"
+                          className="p-2 bg-fadeBrown text-brown rounded-lg disabled:opacity-50"
                         >
                           <FaChevronLeft />
                         </motion.button>
@@ -589,7 +589,7 @@ const ContractDetails = () => {
                           whileTap={{ scale: 0.9 }}
                           onClick={() => handlePageChange(currentPage + 1)}
                           disabled={currentPage === totalPages}
-                          className="p-2 bg-gray-200 text-brown rounded-lg disabled:opacity-50"
+                          className="p-2 bg-fadeBrown text-brown rounded-lg disabled:opacity-50"
                         >
                           <FaChevronRight />
                         </motion.button>
@@ -597,8 +597,8 @@ const ContractDetails = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center text-gray-600">
-                    <FaFileAlt className="mx-auto text-2xl text-gray-400 mb-2" />
+                  <div className="text-center text-brown">
+                    <FaFileAlt className="mx-auto text-2xl text-brown mb-2" />
                     No contract history found
                   </div>
                 )}
@@ -617,7 +617,7 @@ const ContractDetails = () => {
                   <FaFileAlt className="text-xl text-yellowGreen" />
                   <h2 className="text-lg md:text-xl font-semibold text-brown">AI Insights</h2>
                 </div>
-                <p className="text-gray-600 text-sm mb-4">AI-driven recommendations and risk analysis.</p>
+                <p className="text-gray-700 text-sm mb-4">AI-driven recommendations and risk analysis.</p>
                 {insights.length > 0 ? (
                   <div className="space-y-4">
                     {insights.map((insight, index) => (
@@ -625,8 +625,8 @@ const ContractDetails = () => {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center text-gray-600">
-                    <FaFileAlt className="mx-auto text-2xl text-gray-400 mb-2" />
+                  <div className="text-center text-brown">
+                    <FaFileAlt className="mx-auto text-2xl text-brown mb-2" />
                     No AI insights available
                   </div>
                 )}
