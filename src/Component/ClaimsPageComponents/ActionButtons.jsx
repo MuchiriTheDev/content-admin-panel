@@ -124,7 +124,7 @@ const ActionButtons = ({ claimId, status, onAction, onAudit }) => {
       <button
         onClick={() => handleAction('report')}
         disabled={loading.report}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center text-xs font-semibold shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
+        className="px-4 py-2 bg-appleGreen text-brown rounded-lg flex items-center text-xs font-semibold shadow-sm hover:shadow-md hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:hover:scale-100 disabled:cursor-not-allowed"
       >
         {loading.report ? (
           <svg className="animate-spin h-4 w-4 mr-1 text-white" viewBox="0 0 24 24">
