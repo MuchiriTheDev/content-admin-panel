@@ -52,7 +52,7 @@ const PremiumTable = ({ premiums: initialPremiums, loading: initialLoading }) =>
       });
       setLoading(initialLoading);
     }
-  }, [pagination.page, pagination.limit, filters, initialPremiums, initialLoading]);
+  }, [ filters, initialPremiums, initialLoading]);
 
   const handleSearchChange = (e) => {
     setFilters({ ...filters, search: e.target.value });
@@ -210,7 +210,7 @@ const PremiumTable = ({ premiums: initialPremiums, loading: initialLoading }) =>
           />
           <p className="text-brown mt-4 text-lg font-medium">Loading premiums...</p>
         </div>
-      ) : premiums.length === 0 ? (
+      ) : premiums?.length === 0 ? (
         <div className="text-center py-20">
           <p className="text-brown text-lg font-medium">No premiums found.</p>
         </div>
@@ -223,7 +223,7 @@ const PremiumTable = ({ premiums: initialPremiums, loading: initialLoading }) =>
                   <th className="p-4 font-medium">
                     <input
                       type="checkbox"
-                      checked={selectedPremiums.length === premiums.length && premiums.length > 0}
+                      checked={selectedPremiums?.length === premiums?.length && premiums?.length > 0}
                       onChange={handleSelectAll}
                       className="h-4 w-4 text-appleGreen focus:ring-appleGreen border-gray-300 rounded"
                     />
