@@ -10,6 +10,7 @@ import AnalyticsChart from '../../Component/HomePageComponents/AnalyticsChart';
 import InsightCard from '../../Component/HomePageComponents/InsightCard';
 import ReportForm from '../../Component/HomePageComponents/ReportForm';
 import UserTable from '../../Component/HomePageComponents/UserTable';
+import { Link } from "react-router-dom"
 
 const LandingPage = () => {
   const [analytics, setAnalytics] = useState(null);
